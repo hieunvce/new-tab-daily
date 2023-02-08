@@ -4,20 +4,29 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Tab Daily</title>
+    <title>New Tab</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <script src="js/SimpleClock.js"></script>
     <script src="js/SimpleQuote.js"></script>
   </head>
   <body>
     <header></header>
 
-    <main>
-      <section class="clock-section">
-        <simple-clock></simple-clock>
-      </section>
-      <section class="quote-section">
-        <simple-quote></simple-quote>
-      </section>
+    <main class="main-container">
+      <div class="main-content">
+        <section class="clock-section">
+          <simple-clock></simple-clock>
+        </section>
+        <section class="quote-section">
+          <simple-quote
+            quote="...Khi chúng ta sống đẹp với đời, sống tốt với người thì sẽ được hai điều. Thứ nhất, ta gieo tạo được phước lành. Thứ hai, ta đem tiếng khen đến cho Thầy mình, cho Đức Phật tôn kính..."
+            author="Ở HIỀN GẶP LÀNH\nTrích trang 44\nTT. TS. Thích Chân Quang"
+            quote-en="...When we live a virtuous life and treat people with great kindness, we will have two things. First, we create good karma. Second, we offer praise to our revered Buddha and our master..."
+            author-en="ONE GOOD TURN DESERVES ANOTHER\nQuote p. 94\nVen. Phd Thich Chan Quang"
+          ></simple-quote>
+        </section>
+      </div>
     </main>
 
     <footer></footer>

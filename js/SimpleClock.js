@@ -1,7 +1,14 @@
 class SimpleClock extends HTMLElement {
   static styles = `
         <style>
-            // Some style
+            #clock {
+                color: rgb(17, 17, 17);
+                white-space: break-spaces;
+                line-height: 104px;
+                letter-spacing: 4px;
+                font-size: 104px;
+                font-family: system-ui;
+            }
         </style>
     `;
 
@@ -27,6 +34,7 @@ class SimpleClock extends HTMLElement {
       const localTimeString = new Date().toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
       });
       this.shadowRoot.getElementById("clock").innerHTML = localTimeString;
     };
