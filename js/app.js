@@ -14,6 +14,17 @@ function ready(fn) {
 }
 
 /**
+ * Get random integer number in range from min to max
+ *
+ * @param {number} min Min
+ * @param {number} max Max
+ * @returns
+ */
+function randomIntInRange(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+/**
  * A quote
  * @typedef {{content: string, author: string, contentEn: string, authorEn: string}} Quote
  */
@@ -67,7 +78,7 @@ function renderQuote(quote) {
  * 3. Update the local version of the quote data (in Local Storage) if the local version is outdated
  * 4. Prepare the quote that will be shown on the next time user opens the new tab
  */
-function getQuoteData() {
+function main() {
   // 1. Show the quote has been prepared, user will see the quote instantly
   // If this is the first time user opens the new tab, or the quote doesn't exist, show the default quote.
   let quote = getPreparedQuote();
@@ -76,8 +87,52 @@ function getQuoteData() {
   }
   renderQuote(quote);
 
-  // TODO: 2. Check the latest version of the quote data on the server
+  // 2. Check the latest version of the quote data on the server
+  fetch("https://new-tab-daily.vercel.app/db-version.json").then(
+    (versionResponse) => {
+      versionResponse.json().then((versionData) => {
+        const remoteVersion = versionData;
+
+        // Get local db version from local storage
+        let localVersion = null;
+        const localVersionStr = localStorage.getItem("version");
+        if (localVersionStr) {
+          localVersion = JSON.parse(localVersionStr);
+        }
+
+        // Get local db from local storage
+        let localDb = null;
+        const localDbStr = localStorage.getItem("db");
+        if (localDbStr) {
+          localDb = JSON.parse(localDbStr);
+        }
+
+        // 3. Update the local version of the quote data (in Local Storage) if the local version is outdated
+        if (
+          localVersion === null ||
+          localVersion.version !== remoteVersion.version ||
+          localDb === null
+        ) {
+          fetch("https://new-tab-daily.vercel.app/db.json").then(
+            (dbResponse) => {
+              dbResponse.json().then((dbData) => {
+                localStorage.setItem("version", JSON.stringify(versionData));
+                localStorage.setItem("db", JSON.stringify(dbData));
+
+                // 4. Prepare the quote that will be shown on the next time user opens the new tab
+                const quotes = dbData.data;
+                const ramdomIndex = randomIntInRange(0, quotes.length);
+                localStorage.setItem(
+                  "preparedQuote",
+                  JSON.stringify(quotes[ramdomIndex])
+                );
+              });
+            }
+          );
+        }
+      });
+    }
+  );
 }
-// const response = await fetch("/my/url");
-// const data = await response.json();
-ready(getQuoteData);
+
+ready(main);
