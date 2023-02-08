@@ -38,7 +38,7 @@ class SimpleQuote extends HTMLElement {
                     <div id='author' class="author">${quote.author}</div>
                 </div>
             </div>
-            <hr/>
+            <div style="height: 2rem"></div>
             <div class="quote-block-container">
                 <div id='quote-en' class="quote">"${quote.quoteEn}"</div>
                 <div class="author-container">
