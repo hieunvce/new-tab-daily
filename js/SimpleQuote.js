@@ -3,7 +3,11 @@ class SimpleQuote extends HTMLElement {
         <style>
             .quote-block-container {
                 padding: 1em;
-                border: 1px solid #222222;
+                backdrop-filter: blur(16px) saturate(180%);
+                -webkit-backdrop-filter: blur(16px) saturate(180%);
+                background-color: rgba(255, 255, 255, 0.75);
+                border-radius: 12px;
+                border: 1px solid rgba(209, 213, 219, 0.3);
             }
             .quote {
                 font-size: 1.25em;
