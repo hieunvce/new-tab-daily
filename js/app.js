@@ -121,13 +121,21 @@ function main() {
 
                 // 4. Prepare the quote that will be shown on the next time user opens the new tab
                 const quotes = dbData.data;
-                const ramdomIndex = randomIntInRange(0, quotes.length);
+                const ramdomIndex = randomIntInRange(0, quotes.length - 1);
                 localStorage.setItem(
                   "preparedQuote",
                   JSON.stringify(quotes[ramdomIndex])
                 );
               });
             }
+          );
+        } else {
+          // 4. Prepare the quote that will be shown on the next time user opens the new tab
+          const quotes = localDb.data;
+          const ramdomIndex = randomIntInRange(0, quotes.length - 1);
+          localStorage.setItem(
+            "preparedQuote",
+            JSON.stringify(quotes[ramdomIndex])
           );
         }
       });
