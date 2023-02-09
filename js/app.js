@@ -42,6 +42,8 @@ const DEFAULT_QUOTE = {
     "ONE GOOD TURN DESERVES ANOTHER | Quote p. 94 | Ven. Phd Thich Chan Quang",
 };
 
+const DEFAULT_BG_URL = "/images/bg1.jpeg";
+
 /**
  * Get prepared quote from Local Storage
  *
@@ -70,6 +72,25 @@ function renderQuote(quote) {
 }
 
 /**
+ * Get prepared background URL from Local Storage
+ */
+function getPreparedBgUrl() {
+  const bgUrl = localStorage.getItem("bgUrl");
+  return bgUrl;
+}
+
+/**
+ * Render background
+ *
+ * @param {string} url
+ */
+function renderBackground(url) {
+  document.getElementById(
+    "main-container"
+  ).style.backgroundImage = `url("${url}")`;
+}
+
+/**
  * Logic:
  *
  * 1. Show the quote has been prepared, user will see the quote instantly.
@@ -86,6 +107,12 @@ function main() {
     quote = DEFAULT_QUOTE;
   }
   renderQuote(quote);
+
+  let bgUrl = getPreparedBgUrl();
+  if (!bgUrl) {
+    bgUrl = DEFAULT_BG_URL;
+  }
+  renderBackground(bgUrl);
 
   // 2. Check the latest version of the quote data on the server
   fetch("https://new-tab-daily.vercel.app/db-version.json").then(
@@ -141,6 +168,10 @@ function main() {
       });
     }
   );
+
+  // Prepare background URL
+  const randomBgIndex = randomIntInRange(1, 20);
+  localStorage.setItem("bgUrl", `/images/bg${randomBgIndex}.jpeg`);
 }
 
 ready(main);
