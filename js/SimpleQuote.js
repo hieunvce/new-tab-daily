@@ -24,36 +24,38 @@ class SimpleQuote extends HTMLElement {
                 border-left: 1px solid hsl(0deg 0% 32%);
                 color: hsl(0deg 0% 32%);
             }
-            
+
         </style>
     `;
+
+  static renderQuote(quote, author) {
+    const quoteWithBr = quote.replace(/\n/g,"<br/>")
+    return `
+      <div class="quote-block-container">
+          <div id='quote' class="quote">${quoteWithBr}</div>
+          <div class="author-container">
+              <div id='author' class="author">${author}</div>
+          </div>
+      </div>
+    `
+  }
 
   get template() {
     const quote = this.quote;
     return `
             ${SimpleQuote.styles}
-            <div class="quote-block-container">
-                <div id='quote' class="quote">"${quote.quote}"</div>
-                <div class="author-container">
-                    <div id='author' class="author">${quote.author}</div>
-                </div>
-            </div>
+            ${quote.quote ? SimpleQuote.renderQuote(quote.quote, quote.author): ""}
             <div style="height: 2rem"></div>
-            <div class="quote-block-container">
-                <div id='quote-en' class="quote">"${quote.quoteEn}"</div>
-                <div class="author-container">
-                    <div id='author-en' class="author">${quote.authorEn}</div>
-                </div>
-            </div>
+            ${quote.quoteEn ? SimpleQuote.renderQuote(quote.quoteEn, quote.authorEn): ""}
         `;
   }
 
   get quote() {
     return {
-      quote: this.getAttribute("quote") || "",
-      author: this.getAttribute("author") || "",
-      quoteEn: this.getAttribute("quote-en") || "",
-      authorEn: this.getAttribute("author-en") || "",
+      quote: this.getAttribute("quote"),
+      author: this.getAttribute("author"),
+      quoteEn: this.getAttribute("quote-en"),
+      authorEn: this.getAttribute("author-en"),
     };
   }
 
